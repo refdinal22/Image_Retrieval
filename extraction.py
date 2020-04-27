@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
 	for product in products:
 		# Image
-        image = skimage.io.imread(IMAGE_PATH+product.image)
+		image = skimage.io.imread(IMAGE_PATH+product.image)
 
 		image_detection = image_detector.detection(image)
 		# Objek Dominan
