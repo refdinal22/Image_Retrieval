@@ -43,9 +43,9 @@ if __name__ == '__main__':
 
 		image_detection = image_detector.detection(image)
 		# Objek Dominan
-		big_box = image_detector.get_biggest_box(image_detection['rois'])
+		big_box, big_ix = image_detector.get_biggest_box(image_detection['rois'])
 		# Crop Image
-		image = image_detector.crop_object(image_detection, big_box)
+		image = image_detector.crop_object(image, big_box)
 		norm_feat = modelVGG.extract_feat(image)    
 
 		feats.append(norm_feat)
