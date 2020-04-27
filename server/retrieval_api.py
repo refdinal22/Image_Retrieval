@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from database.database import DAO
 
 sys.path.insert(0, "../retrieval")
-import detector
+from retrieval.detector import Detector
 import extractor
 
 api = Api(app)
@@ -55,7 +55,7 @@ class Retrieval(Resource):
 
 		image_path = 'image/uploads/'+filename
 		# Add Detector
-		image_detector = detector.Detector("../weight/mask_rcnn_fashion.h5")
+		image_detector = Detector("../weight/mask_rcnn_fashion.h5")
 		# Add Extractor
 		image_extractor = extractor.Extractor()
 		# Add Database
