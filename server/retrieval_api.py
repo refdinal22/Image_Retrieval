@@ -65,8 +65,8 @@ class Retrieval(Resource):
 		image = skimage.io.imread(image_path)
 		detection_results = image_detector.detection(image)
 		# Dominan Object
-		big_object = image_detector.get_biggest_box(detection_results['rois'])
-		cropped_object = image_detector.crop_object(image_path, big_object)
+		big_object, big_ix = image_detector.get_biggest_box(detection_results['rois'])
+		cropped_object = image_detector.crop_object(image, big_object)
 
 		# Extract
 		query_image_feature = image_extractor.extract_feat(cropped_object)
