@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import mrcnn.model as modellib
 
-sys.path.insert(0, "../config")
-from config.InferenceConfig import InferenceConfig
+sys.path.insert(0, "../")
+from config.inference_config import InferenceConfig
 
 class Detector:
     def __init__(self, model_path):
@@ -20,7 +20,6 @@ class Detector:
         self.model.load_weights(model_path, by_name=True)
 
     def detection(self, image):    	
-		
 		# Run detection
         start = time.time()
         detection_results = self.model.detect([image], verbose=1)

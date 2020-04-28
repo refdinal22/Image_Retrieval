@@ -9,7 +9,7 @@ from flask_restful import Api, Resource
 from werkzeug.utils import secure_filename
 from database.database import DAO
 
-sys.path.insert(0, "../retrieval/")
+sys.path.insert(0, "../retrieval")
 from detector import Detector
 import extractor
 

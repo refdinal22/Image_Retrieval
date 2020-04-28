@@ -1,4 +1,4 @@
-from config.FashionConfig import FashionConfig
+from config.fashion_config import FashionConfig
 
 class InferenceConfig(FashionConfig):
     # Set batch size to 1 since we'll be running inference on
