@@ -17,6 +17,9 @@ import extractor
 
 api = Api(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+# Add Detector
+image_detector = Detector("../weight/mask_rcnn_fashion.h5")
+
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -56,8 +59,6 @@ class Retrieval(Resource):
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 		image_path = 'image/uploads/'+filename
-		# Add Detector
-		image_detector = Detector("../weight/mask_rcnn_fashion.h5")
 		# Add Extractor
 		image_extractor = extractor.Extractor()
 		# Add Database
