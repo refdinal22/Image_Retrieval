@@ -7,7 +7,7 @@ import mrcnn.model as modellib
 
 sys.path.insert(0, "../")
 from config.inference_config import InferenceConfig
-graph = tf.get_default_graph()
+
 
 class Detector:
     def __init__(self, model_path):
@@ -23,8 +23,8 @@ class Detector:
     def detection(self, image):    	
 		# Run detection
         start = time.time()
-        with graph.as_default():
-            detection_results = self.model.detect([image], verbose=1)
+        
+        detection_results = self.model.detect([image], verbose=1)
         end = time.time()
 
 		# Visualize results

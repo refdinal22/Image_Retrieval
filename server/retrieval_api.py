@@ -3,7 +3,8 @@ import h5py
 import sys
 import skimage.io
 import numpy as np
-
+import tensorflow as tf
+from keras.backend import clear_session
 import urllib.request
 from app import app
 from flask import Flask, request, redirect, jsonify, send_from_directory
@@ -18,7 +19,7 @@ import extractor
 api = Api(app)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 # Add Detector
-image_detector = Detector("../weight/mask_rcnn_fashion.h5")
+graph = tf.get_default_graph()
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -38,8 +39,8 @@ def get_id(query_feature):
 
 	rank_score = scores[rank_ID]
 	id_rank = id[rank_ID]
-	# score > 0.8
-	rank = np.r_[(rank_score>0.7).nonzero()]
+	# score > 0.5
+	rank = np.r_[(rank_score>0.5).nonzero()]
 
 	id_rank = id_rank[rank]
 
@@ -60,18 +61,23 @@ class Retrieval(Resource):
 
 		image_path = 'image/uploads/'+filename
 		# Add Extractor
-		image_extractor = extractor.Extractor()
+			
+		
 		# Add Database
 		database = DAO()
 
 		# Object Detection
 		image = skimage.io.imread(image_path)
+		clear_session()
+		image_detector = Detector("../weight/mask_rcnn_fashion.h5")
 		detection_results = image_detector.detection(image)
 		# Dominan Object
 		big_object, big_ix = image_detector.get_biggest_box(detection_results['rois'])
 		cropped_object = image_detector.crop_object(image, big_object)
 
 		# Extract
+		clear_session()
+		image_extractor = extractor.Extractor()
 		query_image_feature = image_extractor.extract_feat(cropped_object)
 
 		# similarity
