@@ -1,6 +1,8 @@
 import os
+import h5py
 import sys
 import skimage.io
+import numpy as np
 
 import urllib.request
 from app import app
@@ -34,7 +36,7 @@ def get_id(query_feature):
 	rank_score = scores[rank_ID]
 	id_rank = id[rank_ID]
 	# score > 0.8
-	rank = np.r_[(rank_score>0.8).nonzero()]
+	rank = np.r_[(rank_score>0.7).nonzero()]
 
 	id_rank = id_rank[rank]
 
@@ -73,7 +75,7 @@ class Retrieval(Resource):
 
 		# similarity
 		id = get_id(query_image_feature)
-
+		data = []
 		result = database.getProduct(id)
 		for res in result:
 			data.append(res.to_dict())
