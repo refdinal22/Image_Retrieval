@@ -80,7 +80,7 @@ class Retrieval(Resource):
 						
 		resp = jsonify({'data': data})
 		resp.status_code = 200
-		return resp
+		return resp	
 
 	def get(self):
 		database = DAO()
@@ -103,4 +103,4 @@ api.add_resource(Retrieval, '/retrieval/image', endpoint='image')
 api.add_resource(ImageServer, '/image/<string:filename>', endpoint='get')
 
 if __name__ == "__main__":
-    app.run(debug=True)	
+    app.run(host= '0.0.0.0', debug=True)	
